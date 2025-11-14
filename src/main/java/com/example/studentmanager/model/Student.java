@@ -17,6 +17,7 @@ public class Student {
     private final StringProperty major;
     private final StringProperty phoneNumber;
     private final StringProperty domainName;
+    private final StringProperty school;
     private final ObjectProperty<java.time.LocalDate> enrollmentDate;
 
     public Student() {
@@ -30,6 +31,7 @@ public class Student {
         this.phoneNumber = new SimpleStringProperty();
         this.enrollmentDate = new SimpleObjectProperty<>();
         this.domainName = new SimpleStringProperty();
+        this.school = new SimpleStringProperty();
     }
 
     public Student(int id, String firstName, String lastName, String email,
