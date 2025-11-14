@@ -1,0 +1,603 @@
+/*
+ * Student Management System - JavaFX CSS Stylesheet
+ * Modern styling for professional JavaFX interface
+ * Demonstrates MVC pattern with clean, accessible design
+ */
+
+/* =============================================================================
+   ROOT AND GLOBAL STYLES
+   ============================================================================= */
+
+.root {
+    -fx-font-family: "Segoe UI", "Arial", sans-serif;
+    -fx-font-size: 13px;
+    -fx-background-color: #f8f9fa;
+    
+    /* Color palette */
+    -primary-color: #007bff;
+    -primary-hover: #0056b3;
+    -secondary-color: #6c757d;
+    -secondary-hover: #545b62;
+    -success-color: #28a745;
+    -success-hover: #1e7e34;
+    -danger-color: #dc3545;
+    -danger-hover: #c82333;
+    -warning-color: #ffc107;
+    -warning-hover: #e0a800;
+    -info-color: #17a2b8;
+    -info-hover: #138496;
+    -light-color: #f8f9fa;
+    -dark-color: #343a40;
+    
+    /* Background colors */
+    -card-background: #ffffff;
+    -header-background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -sidebar-background: #f1f3f4;
+    
+    /* Border and shadow */
+    -border-color: #dee2e6;
+    -border-radius: 6px;
+    -box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    -box-shadow-hover: 0 4px 8px rgba(0,0,0,0.15);
+    
+    /* Spacing */
+    -spacing-xs: 4px;
+    -spacing-sm: 8px;
+    -spacing-md: 12px;
+    -spacing-lg: 16px;
+    -spacing-xl: 24px;
+}
+
+/* =============================================================================
+   HEADER SECTION
+   ============================================================================= */
+
+.header-section {
+    -fx-background-color: -card-background;
+    -fx-padding: 20px;
+    -fx-border-color: -border-color;
+    -fx-border-width: 0 0 1px 0;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 4, 0, 0, 2);
+}
+
+.title-label {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -dark-color;
+    -fx-padding: 0 0 10px 0;
+}
+
+/* =============================================================================
+   STATISTICS SECTION
+   ============================================================================= */
+
+.stats-section {
+    -fx-spacing: 15px;
+    -fx-padding: 15px 0;
+}
+
+.stat-card {
+    -fx-background-color: -card-background;
+    -fx-padding: 20px;
+    -fx-border-radius: -border-radius;
+    -fx-background-radius: -border-radius;
+    -fx-border-color: -border-color;
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 3, 0, 0, 1);
+    -fx-min-width: 120px;
+    -fx-alignment: center;
+}
+
+.stat-card:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 6, 0, 0, 2);
+    -fx-scale-y: 1.02;
+    -fx-scale-x: 1.02;
+}
+
+.stat-number {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -primary-color;
+}
+
+.stat-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: -secondary-color;
+    -fx-font-weight: 500;
+}
+
+/* =============================================================================
+   BUTTONS
+   ============================================================================= */
+
+.button {
+    -fx-padding: 10px 20px;
+    -fx-border-radius: -border-radius;
+    -fx-background-radius: -border-radius;
+    -fx-font-weight: 500;
+    -fx-cursor: hand;
+    -fx-border-width: 1px;
+    -fx-border-color: transparent;
+}
+
+.primary-button {
+    -fx-background-color: -primary-color;
+    -fx-text-fill: white;
+    -fx-border-color: -primary-color;
+}
+
+.primary-button:hover {
+    -fx-background-color: -primary-hover;
+    -fx-border-color: -primary-hover;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,123,255,0.3), 4, 0, 0, 2);
+}
+
+.primary-button:pressed {
+    -fx-background-color: derive(-primary-color, -10%);
+}
+
+.secondary-button {
+    -fx-background-color: -secondary-color;
+    -fx-text-fill: white;
+    -fx-border-color: -secondary-color;
+}
+
+.secondary-button:hover {
+    -fx-background-color: -secondary-hover;
+    -fx-border-color: -secondary-hover;
+}
+
+.danger-button {
+    -fx-background-color: -danger-color;
+    -fx-text-fill: white;
+    -fx-border-color: -danger-color;
+}
+
+.danger-button:hover {
+    -fx-background-color: -danger-hover;
+    -fx-border-color: -danger-hover;
+    -fx-effect: dropshadow(three-pass-box, rgba(220,53,69,0.3), 4, 0, 0, 2);
+}
+
+.success-button {
+    -fx-background-color: -success-color;
+    -fx-text-fill: white;
+    -fx-border-color: -success-color;
+}
+
+.success-button:hover {
+    -fx-background-color: -success-hover;
+    -fx-border-color: -success-hover;
+}
+
+.button:disabled {
+    -fx-opacity: 0.6;
+    -fx-cursor: default;
+}
+
+/* =============================================================================
+   TABLE STYLES
+   ============================================================================= */
+
+.student-table {
+    -fx-background-color: -card-background;
+    -fx-border-color: -border-color;
+    -fx-border-width: 1px;
+    -fx-border-radius: -border-radius;
+    -fx-background-radius: -border-radius;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 3, 0, 0, 1);
+}
+
+.student-table .column-header-background {
+    -fx-background-color: linear-gradient(to bottom, #f7f7f7, #e8e8e8);
+    -fx-border-color: -border-color;
+    -fx-border-width: 0 0 2px 0;
+}
+
+.student-table .column-header {
+    -fx-font-weight: bold;
+    -fx-text-fill: -dark-color;
+    -fx-padding: 12px 8px;
+    -fx-font-size: 12px;
+}
+
+.student-table .table-row-cell {
+    -fx-background-color: -card-background;
+    -fx-border-color: #f0f0f0;
+    -fx-border-width: 0 0 1px 0;
+    -fx-padding: 8px 4px;
+}
+
+.student-table .table-row-cell:selected {
+    -fx-background-color: rgba(0,123,255,0.1);
+    -fx-border-color: -primary-color;
+    -fx-text-fill: -dark-color;
+}
+
+.student-table .table-row-cell:hover {
+    -fx-background-color: rgba(0,0,0,0.03);
+}
+
+.student-table .table-row-cell:selected:hover {
+    -fx-background-color: rgba(0,123,255,0.15);
+}
+
+.student-table .table-cell {
+    -fx-padding: 8px;
+    -fx-alignment: center-left;
+}
+
+.student-table .table-cell:selected {
+    -fx-text-fill: -dark-color;
+}
+
+/* =============================================================================
+   FORM STYLES
+   ============================================================================= */
+
+.form-container {
+    -fx-background-color: -card-background;
+    -fx-padding: 30px;
+    -fx-spacing: 20px;
+}
+
+.form-section {
+    -fx-background-color: -card-background;
+    -fx-padding: 20px;
+    -fx-border-color: -border-color;
+    -fx-border-width: 1px;
+    -fx-border-radius: -border-radius;
+    -fx-background-radius: -border-radius;
+    -fx-spacing: 15px;
+}
+
+.section-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -dark-color;
+    -fx-padding: 0 0 10px 0;
+}
+
+.field-label {
+    -fx-font-weight: 500;
+    -fx-text-fill: -dark-color;
+    -fx-font-size: 12px;
+}
+
+.form-field {
+    -fx-padding: 10px 12px;
+    -fx-border-color: -border-color;
+    -fx-border-width: 1px;
+    -fx-border-radius: -border-radius;
+    -fx-background-radius: -border-radius;
+    -fx-background-color: white;
+}
+
+.form-field:focused {
+    -fx-border-color: -primary-color;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,123,255,0.2), 4, 0, 0, 0);
+}
+
+.text-field, .text-area {
+    -fx-font-size: 13px;
+}
+
+.combo-box {
+    -fx-background-color: white;
+}
+
+.combo-box .list-cell {
+    -fx-padding: 8px 12px;
+}
+
+.date-picker {
+    -fx-background-color: white;
+}
+
+.spinner {
+    -fx-background-color: white;
+}
+
+.spinner .text-field {
+    -fx-alignment: center-right;
+}
+
+/* =============================================================================
+   VALIDATION AND ERROR STYLES
+   ============================================================================= */
+
+.error-label {
+    -fx-text-fill: -danger-color;
+    -fx-font-size: 11px;
+    -fx-font-weight: 500;
+}
+
+.validation-summary {
+    -fx-background-color: #f8d7da;
+    -fx-border-color: -danger-color;
+    -fx-border-width: 1px;
+    -fx-border-radius: -border-radius;
+    -fx-background-radius: -border-radius;
+    -fx-padding: 15px;
+}
+
+.validation-title {
+    -fx-font-weight: bold;
+    -fx-text-fill: -danger-color;
+    -fx-font-size: 12px;
+}
+
+.validation-text {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: -danger-color;
+    -fx-font-size: 11px;
+}
+
+.form-field:error {
+    -fx-border-color: -danger-color;
+    -fx-border-width: 2px;
+}
+
+/* =============================================================================
+   STATUS AND INFO STYLES
+   ============================================================================= */
+
+.status-bar {
+    -fx-background-color: -light-color;
+    -fx-border-color: -border-color;
+    -fx-border-width: 1px 0 0 0;
+    -fx-padding: 10px 20px;
+}
+
+.status-label {
+    -fx-text-fill: -dark-color;
+    -fx-font-weight: 500;
+}
+
+.timestamp-label {
+    -fx-text-fill: -secondary-color;
+    -fx-font-size: 11px;
+}
+
+.info-label {
+    -fx-text-fill: -info-color;
+    -fx-font-weight: 500;
+}
+
+.selected-student-label {
+    -fx-text-fill: -primary-color;
+    -fx-font-weight: 500;
+}
+
+/* =============================================================================
+   LAYOUT CONTAINERS
+   ============================================================================= */
+
+.button-bar {
+    -fx-background-color: -light-color;
+    -fx-border-color: -border-color;
+    -fx-border-width: 1px 0 0 0;
+    -fx-padding: 15px 20px;
+    -fx-spacing: 10px;
+}
+
+.form-scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.form-scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.form-scroll-pane .content {
+    -fx-background-color: -card-background;
+}
+
+/* =============================================================================
+   SEARCH AND FILTER CONTROLS
+   ============================================================================= */
+
+.search-field {
+    -fx-padding: 8px 12px;
+    -fx-border-color: -border-color;
+    -fx-border-width: 1px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-background-color: white;
+    -fx-prompt-text-fill: -secondary-color;
+}
+
+.search-field:focused {
+    -fx-border-color: -primary-color;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,123,255,0.2), 4, 0, 0, 0);
+}
+
+.filter-combo {
+    -fx-background-color: white;
+    -fx-border-color: -border-color;
+    -fx-border-width: 1px;
+    -fx-border-radius: -border-radius;
+    -fx-background-radius: -border-radius;
+}
+
+/* =============================================================================
+   SCROLL BARS
+   ============================================================================= */
+
+.scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .track {
+    -fx-background-color: #f1f1f1;
+    -fx-border-color: transparent;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: -secondary-color;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: derive(-secondary-color, -20%);
+}
+
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+/* =============================================================================
+   TOOLTIPS
+   ============================================================================= */
+
+.tooltip {
+    -fx-background-color: rgba(0,0,0,0.9);
+    -fx-text-fill: white;
+    -fx-padding: 8px 12px;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-font-size: 11px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 4, 0, 0, 2);
+}
+
+/* =============================================================================
+   ALERT DIALOGS
+   ============================================================================= */
+
+.alert {
+    -fx-background-color: -card-background;
+}
+
+.alert .header-panel {
+    -fx-background-color: -light-color;
+    -fx-border-color: -border-color;
+    -fx-border-width: 0 0 1px 0;
+}
+
+.alert .content.label {
+    -fx-padding: 20px;
+    -fx-text-fill: -dark-color;
+}
+
+/* =============================================================================
+   ANIMATIONS AND TRANSITIONS
+   ============================================================================= */
+
+.animated-button {
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.fade-in {
+    -fx-opacity: 0;
+    -fx-transition: opacity 0.3s ease-in;
+}
+
+.fade-in:hover {
+    -fx-opacity: 1;
+}
+
+/* =============================================================================
+   RESPONSIVE DESIGN ADJUSTMENTS
+   ============================================================================= */
+
+.compact-mode .stat-card {
+    -fx-padding: 15px;
+    -fx-min-width: 100px;
+}
+
+.compact-mode .stat-number {
+    -fx-font-size: 20px;
+}
+
+.compact-mode .button {
+    -fx-padding: 8px 16px;
+    -fx-font-size: 12px;
+}
+
+/* =============================================================================
+   ACCESSIBILITY ENHANCEMENTS
+   ============================================================================= */
+
+.high-contrast .root {
+    -fx-background-color: #000000;
+    -fx-text-fill: #ffffff;
+}
+
+.high-contrast .card-background {
+    -fx-background-color: #1a1a1a;
+    -fx-border-color: #ffffff;
+}
+
+.high-contrast .primary-button {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #000000;
+    -fx-border-color: #ffffff;
+    -fx-border-width: 2px;
+}
+
+/* Focus indicators for keyboard navigation */
+.button:focused,
+.text-field:focused,
+.combo-box:focused,
+.date-picker:focused,
+.spinner:focused,
+.table-view:focused {
+    -fx-effect: dropshadow(three-pass-box, -primary-color, 8, 0, 0, 0);
+}
+
+/* =============================================================================
+   UTILITY CLASSES
+   ============================================================================= */
+
+.text-center {
+    -fx-alignment: center;
+}
+
+.text-left {
+    -fx-alignment: center-left;
+}
+
+.text-right {
+    -fx-alignment: center-right;
+}
+
+.font-bold {
+    -fx-font-weight: bold;
+}
+
+.font-italic {
+    -fx-font-style: italic;
+}
+
+.margin-top {
+    -fx-padding: 10px 0 0 0;
+}
+
+.margin-bottom {
+    -fx-padding: 0 0 10px 0;
+}
+
+.no-border {
+    -fx-border-width: 0;
+}
+
+.rounded {
+    -fx-border-radius: -border-radius;
+    -fx-background-radius: -border-radius;
+}
+
+.shadow {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 4, 0, 0, 2);
+}
+
+.shadow-hover:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 8, 0, 0, 4);
+}
