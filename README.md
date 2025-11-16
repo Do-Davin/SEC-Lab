@@ -727,3 +727,33 @@ SOFTWARE.
 **Built with ❤️ using the MVC architectural pattern in JavaFX**
 
 *This project serves as both a functional student management application and an educational resource for learning MVC architecture principles in desktop application development.*
+
+---
+
+## 🧑‍🤝‍🧑 Group Members (Required for Submission)
+
+The Student Management System has been updated to include the real student names of our group members.  
+All sample data has been replaced inside the SQLite database and the application now displays our group members as the default students.
+
+### 👥 Group Members
+1. **Do Davin**
+2. **Tat Chansereyvong**
+
+### 🔧 Changes Made
+- Updated the SQLite `students.db` file to insert our group members.
+- Verified that each member appears in the table when the application is launched.
+- Ensured that all CRUD, search, and filter features work correctly with these updated names.
+
+### 💾 How to Test
+1. Run the application using:
+   ```bash
+   mvn javafx:run
+2. The main table will show the student names listed above.
+
+3. Try:
+* Editing a member
+* Deleting a member
+* Searching each name
+* Filtering by major
+
+4. Verify that everything works without errors.

@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -76,6 +77,53 @@ public class StudentController implements Initializable {
     @FXML private Label statusLabel;
     @FXML private Label lastUpdatedLabel;
 
+    @FXML
+    private ComboBox<String> domainFilterComboBox;
+
+    @FXML
+    private ComboBox<String> themeComboBox;
+
+    private boolean showFailed = false;
+    private boolean showHonor = false;
+
+    @FXML
+    private void handleDomainFilter() {
+        applyFilters();
+        updateStatusBar("Filtered by domain: " + domainFilterComboBox.getValue());
+    }
+
+    @FXML
+    private void handleShowFailedStudents() {
+        showFailed = true;
+        showHonor = false;
+        majorFilterComboBox.setValue("All Majors");
+        domainFilterComboBox.setValue("All Domains");
+        searchField.clear();
+        applyFilters();
+        updateStatusBar("Showing failed students (GPA < 2.0)");
+    }
+
+    @FXML
+    private void handleThemeSwitch() {
+        Scene scene = studentTable.getScene();
+        if (scene == null) return;
+
+        String selected = themeComboBox.getValue();
+        if (selected == null) return;
+
+        if (selected.equals("Dark")) {
+            scene.getStylesheets().setAll(
+                getClass().getResource("/css/dark-theme.css").toExternalForm()
+            );
+            updateStatusBar("Dark theme applied");
+        } else {
+            scene.getStylesheets().setAll(
+                getClass().getResource("/css/application.css").toExternalForm()
+            );
+            updateStatusBar("Light theme applied");
+        }
+    }
+
     // Model layer
     private StudentDAO studentDAO;
     private FilteredList<Student> filteredStudents;
@@ -84,6 +132,17 @@ public class StudentController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         logger.info("Initializing StudentController");
+
+        themeComboBox.setValue("Light");
+
+        Platform.runLater(() -> {
+            Scene scene = studentTable.getScene();
+            if (scene != null) {
+                scene.getStylesheets().add(
+                    getClass().getResource("/css/application.css").toExternalForm()
+                );
+            }
+        });
         
         // Initialize the data access layer
         initializeDAO();
@@ -99,6 +158,9 @@ public class StudentController implements Initializable {
         
         // Setup major filter combo box
         setupMajorFilter();
+
+        // Setup domain name filter combo box
+        setupDomainFilter();
         
         // Update statistics
         updateStatistics();
@@ -194,20 +256,22 @@ public class StudentController implements Initializable {
         studentTable.setItems(sortedStudents);
         
         // Setup search functionality
-        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredStudents.setPredicate(student -> {
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
+        // searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+        //     filteredStudents.setPredicate(student -> {
+        //         if (newValue == null || newValue.isEmpty()) {
+        //             return true;
+        //         }
                 
-                String lowerCaseFilter = newValue.toLowerCase();
-                return student.getFirstName().toLowerCase().contains(lowerCaseFilter) ||
-                       student.getLastName().toLowerCase().contains(lowerCaseFilter) ||
-                       student.getEmail().toLowerCase().contains(lowerCaseFilter) ||
-                       student.getMajor().toLowerCase().contains(lowerCaseFilter);
-            });
-            updateStatistics();
-        });
+        //         String lowerCaseFilter = newValue.toLowerCase();
+        //         return student.getFirstName().toLowerCase().contains(lowerCaseFilter) ||
+        //                student.getLastName().toLowerCase().contains(lowerCaseFilter) ||
+        //                student.getEmail().toLowerCase().contains(lowerCaseFilter) ||
+        //                student.getMajor().toLowerCase().contains(lowerCaseFilter);
+        //     });
+        //     updateStatistics();
+        // });
+
+        searchField.textProperty().addListener((obs, oldVal, newVal) -> applyFilters());
     }
     
     /**
@@ -252,6 +316,21 @@ public class StudentController implements Initializable {
     /**
      * Setup domain name filter combo box
      */
+    private void setupDomainFilter() {
+        List<String> domains = studentDAO.getAllStudents().stream()
+            .map(s -> s.getEmail()
+                    .substring(s.getEmail().indexOf("@") + 1)
+                    .toLowerCase()
+                    .trim())
+                .distinct()
+                .sorted()
+                .collect(Collectors.toList());
+
+            domains.add(0, "All Domains");
+
+            domainFilterComboBox.setItems(FXCollections.observableArrayList(domains));
+            domainFilterComboBox.setValue("All Domains");
+    }
     
     /**
      * Handle add new student
@@ -399,9 +478,12 @@ public class StudentController implements Initializable {
     private void handleClearSearch() {
         searchField.clear();
         majorFilterComboBox.setValue("All Majors");
-        filteredStudents.setPredicate(null);
-        updateStatistics();
-        updateStatusBar("Search cleared");
+        domainFilterComboBox.setValue("All Domains");
+        showHonor = false;
+        showFailed = false;
+        applyFilters();
+        // updateStatistics();
+        updateStatusBar("Search & filter cleared");
     }
     
     /**
@@ -418,27 +500,8 @@ public class StudentController implements Initializable {
      */
     @FXML
     private void handleMajorFilter() {
-        String selectedMajor = majorFilterComboBox.getValue();
-        if (selectedMajor == null || selectedMajor.equals("All Majors")) {
-            filteredStudents.setPredicate(student -> {
-                String searchText = searchField.getText();
-                if (searchText == null || searchText.isEmpty()) {
-                    return true;
-                }
-                return matchesSearchCriteria(student, searchText);
-            });
-        } else {
-            filteredStudents.setPredicate(student -> {
-                boolean majorMatches = student.getMajor().equals(selectedMajor);
-                String searchText = searchField.getText();
-                if (searchText == null || searchText.isEmpty()) {
-                    return majorMatches;
-                }
-                return majorMatches && matchesSearchCriteria(student, searchText);
-            });
-        }
-        updateStatistics();
-        updateStatusBar("Filtered by major: " + selectedMajor);
+        applyFilters();
+        updateStatusBar("Filtered by major: " + majorFilterComboBox.getValue());
     }
     
     /**
@@ -446,11 +509,13 @@ public class StudentController implements Initializable {
      */
     @FXML
     private void handleShowHonorStudents() {
-        filteredStudents.setPredicate(Student::isHonorStudent);
-        searchField.clear();
+        showHonor = true;
+        showFailed = false;
         majorFilterComboBox.setValue("All Majors");
-        updateStatistics();
-        updateStatusBar("Showing honor students only (GPA ≥ 3.5)");
+        domainFilterComboBox.setValue("All Domains");
+        searchField.clear();
+        applyFilters();
+        updateStatusBar("Showing honor students (GPA ≥ 3.5)");
     }
     
     /**
@@ -651,5 +716,56 @@ public class StudentController implements Initializable {
         updateStatistics();
         setupMajorFilter();
         updateStatusBar("Student saved successfully");
+    }
+
+    private void applyFilters() {
+        // Normalize values
+        String search = searchField.getText();
+        String selectedMajor = majorFilterComboBox.getValue();
+        String selectedDomain = domainFilterComboBox.getValue();
+
+        String normalizedSearch = (search == null) ? "" : search.trim().toLowerCase();
+        String normalizedMajor = (selectedMajor == null) ? "All Majors" : selectedMajor;
+        String normalizedDomain = (selectedDomain == null) ? "All Domains" : selectedDomain;
+
+        filteredStudents.setPredicate(student -> {
+            if (student == null) return false;
+
+            // Domain filter
+            String emailDomain = student.getEmail()
+                    .substring(student.getEmail().indexOf("@") + 1)
+                    .toLowerCase();
+
+            boolean domainMatch =
+                    normalizedDomain.equals("All Domains") ||
+                    emailDomain.equals(normalizedDomain.toLowerCase());
+
+            // Major filter
+            boolean majorMatch =
+                    normalizedMajor.equals("All Majors") ||
+                    student.getMajor().equalsIgnoreCase(normalizedMajor);
+
+            // Search filter
+            boolean searchMatch =
+                    normalizedSearch.isEmpty() ||
+                    student.getFirstName().toLowerCase().contains(normalizedSearch) ||
+                    student.getLastName().toLowerCase().contains(normalizedSearch) ||
+                    student.getEmail().toLowerCase().contains(normalizedSearch) ||
+                    student.getMajor().toLowerCase().contains(normalizedSearch);
+            
+            // Honor filter
+            if (showHonor && !student.isHonorStudent()) {
+                return false;
+            }
+
+            // Failed filter
+            if (showFailed && !student.isFailed()) {
+                return false;
+            }
+
+            return domainMatch && majorMatch && searchMatch;
+        });
+
+        updateStatistics();
     }
 }

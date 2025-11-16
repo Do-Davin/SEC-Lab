@@ -12,6 +12,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 
 <BorderPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.studentmanager.controller.StudentController">
    <top>
@@ -69,7 +71,24 @@
                   <ComboBox fx:id="majorFilterComboBox" onAction="#handleMajorFilter" prefWidth="150.0" promptText="All Majors" />
                   <Button fx:id="showHonorButton" onAction="#handleShowHonorStudents" styleClass="secondary-button" text="Honor Students" />
                   <Label text="Domain Name" />
-                  <ComboBox fx:id="majorFilterComboBox1" onAction="#handleMajorFilter" prefWidth="150.0" promptText="All Students" />
+                  <ComboBox fx:id="domainFilterComboBox" onAction="#handleMajorFilter" prefWidth="150.0" promptText="All Students" />
+                  <!-- <Button fx:id="handleShowFailedStudents" mnemonicParsing="false" text="Failed Students" /> -->
+                  <Button text="Failed Students"
+                           styleClass="danger-button"
+                           onAction="#handleShowFailedStudents"/>
+
+                  <Separator orientation="VERTICAL"/>
+
+                  <ComboBox fx:id="themeComboBox"
+                            onAction="#handleThemeSwitch"
+                            prefWidth="130">
+                     <items>
+                        <FXCollections fx:factory="observableArrayList">
+                           <String fx:value="Light" />
+                           <String fx:value="Dark" />
+                        </FXCollections>
+                     </items>
+                  </ComboBox>
                </children>
             </HBox>
          </children>
