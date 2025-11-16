@@ -14,8 +14,8 @@ public class App extends Application {
     
     private static final String APPLICATION_TITLE = "Student Management System - MVC Demo";
     private static final String VERSION = "1.0.0";
-    private static final int WINDOW_WIDTH = 1200;
-    private static final int WINDOW_HEIGHT = 800;
+    private static final int WINDOW_WIDTH = 1400;
+    private static final int WINDOW_HEIGHT = 1000;
     private static final int MIN_WINDOW_WIDTH = 1000;
     private static final int MIN_WINDOW_HEIGHT = 600;
     

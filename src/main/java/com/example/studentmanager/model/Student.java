@@ -50,6 +50,10 @@ public class Student {
         return getGpa() >= 3.5;
     }
 
+    public boolean isFailedStudent() {
+        return getGpa() < 2.0;
+    }
+
     public String getFullName() {
         return getFirstName() + " " + getLastName();
     }
@@ -203,8 +207,8 @@ public class Student {
         this.major.set(major != null ? major.trim() : "");
     }
 
-    public void setDomainName (String domainName) {
-        // TODO
+    public boolean isFailed() {
+        return this.getGpa() < 2.0;
     }
 
     public String getPhoneNumber() {

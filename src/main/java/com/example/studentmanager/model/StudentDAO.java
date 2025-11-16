@@ -4,11 +4,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Student Data Access Object (DAO)
@@ -112,7 +112,7 @@ public class StudentDAO {
             """;
         
         try (Connection conn = DriverManager.getConnection(DB_URL);
-             var pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             pstmt.setString(1, student.getFirstName());
             pstmt.setString(2, student.getLastName());
@@ -127,14 +127,20 @@ public class StudentDAO {
             int affectedRows = pstmt.executeUpdate();
             
             if (affectedRows > 0) {
-                ResultSet rs = pstmt.getGeneratedKeys();
-                if (rs.next()) {
-                    student.setId(rs.getInt(1));
-                    students.add(student);
-                    logger.info("Student added successfully: {}", student);
-                    return true;
+                // SQLite-suppported way get last ID
+                try (Statement stmt = conn.createStatement();
+                     ResultSet rs = stmt.executeQuery("SELECT last_insert_rowid()")) {
+                     
+                    if (rs.next()) {
+                        student.setId(rs.getInt(1));
+                    }
                 }
+
+                students.add(student);
+                logger.info("Student added successfully: {}", student);
+                return true;
             }
+
         } catch (SQLException e) {
             logger.error("Error adding student: {}", student, e);
         }
@@ -380,6 +386,24 @@ public class StudentDAO {
         }
         
         return false;
+    }
+
+    // public List<Student> getFailedStudents() {
+    //     List<Student> results = new ArrayList<>();
+
+    //     for (Student s : students) {
+    //         if (s.getGpa() < 2.0) {
+    //             results.add(s);
+    //         }
+    //     }
+
+    //     return results;
+    // }
+
+    public List<Student> getFailedStudents() {
+        return students.stream()
+                .filter(s -> s.getGpa() < 2.0)
+                .collect(Collectors.toList());
     }
 
     /**
