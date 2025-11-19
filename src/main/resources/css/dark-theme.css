@@ -50,6 +50,7 @@
     -fx-border-color: #3f3f3f;
     -fx-border-radius: 8px;
     -fx-background-radius: 8px;
+    -fx-padding: 20px;
 }
 
 .stat-number {
@@ -59,7 +60,12 @@
 }
 
 .stat-label {
-    -fx-text-fill: #aaaaaa;
+    -fx-text-fill: #ffffff;
+}
+/*text color*/
+
+.text {
+    -fx-text-fill:#ffffff;
 }
 
 /* =============================================================
@@ -85,8 +91,9 @@
 
 /* Secondary */
 .secondary-button {
-    -fx-background-color: #3a3a3a;
+    /* -fx-background-color: #3a3a3a; */
     -fx-text-fill: white;
+    -fx-background-color: #3a3a3a;
 }
 
 .secondary-button:hover {
@@ -136,7 +143,7 @@
 }
 
 .student-table .table-cell {
-    -fx-text-fill: #dddddd;
+    -fx-text-fill: #ffffff;
 }
 
 /* =============================================================
@@ -151,6 +158,7 @@
     -fx-background-color: #2a2a2a;
     -fx-border-color: #444444;
     -fx-text-fill: #ffffff;
+    -fx-prompt-text-fill: #ffffff;
 }
 
 .search-field:focused,
@@ -174,11 +182,18 @@
 }
 
 .status-label {
-    -fx-text-fill: #cccccc;
+    -fx-text-fill: #ffffff;
 }
 
 .timestamp-label {
-    -fx-text-fill: #888888;
+    -fx-text-fill: #ffffff;
+}
+
+.text-label {
+    -fx-text-fill: #ffffff;
+}
+.info-label {
+    -fx-text-fill: -info-color;
 }
 
 /* =============================================================

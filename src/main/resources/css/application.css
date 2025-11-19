@@ -79,13 +79,13 @@
 .stat-card {
     -fx-background-color: -card-background;
     -fx-padding: 20px;
-    -fx-border-radius: -border-radius;
-    -fx-background-radius: -border-radius;
     -fx-border-color: -border-color;
     -fx-border-width: 1px;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 3, 0, 0, 1);
     -fx-min-width: 120px;
     -fx-alignment: center;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
 }
 
 .stat-card:hover {
@@ -104,6 +104,7 @@
     -fx-font-size: 12px;
     -fx-text-fill: -secondary-color;
     -fx-font-weight: 500;
+    
 }
 
 /* =============================================================================

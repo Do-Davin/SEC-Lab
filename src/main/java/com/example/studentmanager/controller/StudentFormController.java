@@ -70,7 +70,7 @@ public class StudentFormController implements Initializable {
         "Computer Science", "Mathematics", "Physics", "Biology", "Chemistry",
         "History", "English", "Psychology", "Economics", "Business Administration",
         "Engineering", "Medicine", "Law", "Art", "Music", "Philosophy",
-        "Political Science", "Sociology", "Anthropology", "Environmental Science"
+        "Political Science", "Sociology", "Anthropology", "Environmental Science", "Software Engineering"
     );
     
     @Override

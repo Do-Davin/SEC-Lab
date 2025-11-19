@@ -63,14 +63,14 @@
             <!-- Search and Filter Section -->
             <HBox alignment="CENTER_LEFT" spacing="10.0">
                <children>
-                  <Label text="Search:" />
+                  <Label text="Search:" styleClass="text" />
                   <TextField fx:id="searchField" onKeyReleased="#handleSearch" prefWidth="250.0" promptText="Search by name, email, or major..." />
                   <Button fx:id="clearSearchButton" onAction="#handleClearSearch" styleClass="secondary-button" text="Clear" />
                   <Separator orientation="VERTICAL" />
-                  <Label text="Filter by Major:" />
+                  <Label text="Filter by Major:" styleClass="text"/>
                   <ComboBox fx:id="majorFilterComboBox" onAction="#handleMajorFilter" prefWidth="150.0" promptText="All Majors" />
                   <Button fx:id="showHonorButton" onAction="#handleShowHonorStudents" styleClass="secondary-button" text="Honor Students" />
-                  <Label text="Domain Name" />
+                  <Label text="Domain Name" styleClass="text"/>
                   <ComboBox fx:id="domainFilterComboBox" onAction="#handleMajorFilter" prefWidth="150.0" promptText="All Students" />
                   <!-- <Button fx:id="handleShowFailedStudents" mnemonicParsing="false" text="Failed Students" /> -->
                   <Button text="Failed Students"
@@ -127,7 +127,7 @@
                   <Button fx:id="deleteButton" disable="true" onAction="#handleDeleteStudent" styleClass="danger-button" text="Delete Selected" />
                   <Button fx:id="viewDetailsButton" disable="true" onAction="#handleViewDetails" styleClass="secondary-button" text="View Details" />
                   <Separator orientation="VERTICAL" />
-                  <Label text="Selected:" />
+                  <Label text="Selected:" styleClass="text"/>
                   <Label fx:id="selectedStudentLabel" styleClass="info-label" text="None" />
                </children>
             </HBox>
