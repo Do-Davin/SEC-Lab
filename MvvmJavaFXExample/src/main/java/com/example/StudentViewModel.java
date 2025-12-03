@@ -7,7 +7,11 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * UserViewModel class that acts as the ViewModel in the MVVM pattern.
@@ -15,12 +19,34 @@ import lombok.Data;
  * the presentation logic.
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class StudentViewModel {
     private final StringProperty firstName = new SimpleStringProperty("");
     private final StringProperty lastName = new SimpleStringProperty("");
     private final StringProperty email = new SimpleStringProperty("");
     private final ObjectProperty<LocalDate> birthDate = new SimpleObjectProperty<>(null);
-    private final ObservableList<Student> students = FXCollections.observableArrayList();
+    private final StringProperty searchQuery = new SimpleStringProperty("");
+    private final ObservableList<Student> filteredStudents = FXCollections.observableArrayList();
+
+    ObservableList<Student> students = FXCollections.observableArrayList(
+        new Student("Do", "Davin", "davin@gmail.com", LocalDate.of(2009, 1, 13)),
+        new Student("Chin", "Hongnyheng", "chin.hongnyheng@gmail.com", LocalDate.of(2008, 3, 22)),
+        new Student("Sam", "Sokleap", "sam.sokleap@yahoo.com", LocalDate.of(2008, 7, 15)),
+        new Student("Thy", "Sethasarakvath", "thy.sethasarakvath@gmail.com", LocalDate.of(2008, 11, 4)),
+        new Student("Srun", "Naieang", "srun.naieang@gmail.com", LocalDate.of(2009, 5, 18)),
+        new Student("Virak", "Rith", "virak.rith@hotmail.com", LocalDate.of(2008, 9, 9)),
+        new Student("Chea", "Panharith", "chea.panharith@gmail.com", LocalDate.of(2009, 2, 27)),
+        new Student("Noch", "Munny Ratanak", "noch.ratanak@gmail.com", LocalDate.of(2009, 6, 3)),
+        new Student("Tat", "Chansereyvong", "tat.chansereyvong@gmail.com", LocalDate.of(2008, 12, 13)),
+        new Student("Huoth", "Sitha", "huoth.sitha@gmail.com", LocalDate.of(2009, 8, 20)),
+        new Student("Kheang", "Ann", "kheang.ann@gmail.com", LocalDate.of(2008, 4, 11)),
+        new Student("Nut", "Sopaphiirum", "nut.sopaphiirum@yahoo.com", LocalDate.of(2009, 10, 1)),
+        new Student("Try", "Khemchhun", "try.khemchhun@gmail.com", LocalDate.of(2009, 3, 6)),
+        new Student("Pon", "Pulprachgnar", "pon.pulprachgnar@gmail.com", LocalDate.of(2008, 5, 29))
+    );
 
     // public StudentViewModel() {
     //     // Initialize with empty values
@@ -41,6 +67,14 @@ public class StudentViewModel {
 
     public ObjectProperty<LocalDate> birthDateProperty() {
         return birthDate;
+    }
+
+    public ObservableList<Student> getFilteredStudents() {
+        return filteredStudents;
+    }
+
+    public StringProperty searchQueryProperty() {
+        return searchQuery;
     }
 
     public ObservableList<Student> getStudents() {
@@ -101,7 +135,7 @@ public class StudentViewModel {
         if (isValidStudent()) {
             Student newStudent = new Student(getFirstName(), getLastName(), getEmail(), getBirthDate());
             students.add(newStudent);
-            sortStudents(criteria, ascending);
+            filterStudents(criteria, ascending);
             clearForm();
         }
     }
@@ -142,8 +176,24 @@ public class StudentViewModel {
         return students.size();
     }
 
+    public void filterStudents(String criteria, boolean ascending) {
+        filteredStudents.clear();
+
+        String query = searchQuery.get() == null ? "" : searchQuery.get().toLowerCase().trim();
+
+        // Filter
+        students.stream()
+            .filter(s ->
+                s.getFirstName().toLowerCase().contains(query) ||
+                s.getLastName().toLowerCase().contains(query) ||
+                s.getEmail().toLowerCase().contains(query))
+            .forEach(filteredStudents::add);
+
+        sortStudents(criteria, ascending);
+    }
+
     public void sortStudents(String criteria, boolean ascending) {
-        FXCollections.sort(students, (s1, s2) -> {
+        FXCollections.sort(filteredStudents, (s1, s2) -> {
             int result = 0;
 
             switch (criteria) {
@@ -160,7 +210,6 @@ public class StudentViewModel {
                     break;
 
                 case "Birthdate":
-                    // null-safe compare
                     if (s1.getBirthDate() == null && s2.getBirthDate() == null) result = 0;
                     else if (s1.getBirthDate() == null) result = -1;
                     else if (s2.getBirthDate() == null) result = 1;

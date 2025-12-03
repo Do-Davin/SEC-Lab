@@ -73,7 +73,7 @@
                      <children>
                         <Button fx:id="saveButton" onAction="#handleSaveStudent" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Save Student" />
                         <Button fx:id="clearButton" onAction="#handleClearForm" style="-fx-background-color: #f44336; -fx-text-fill: white;" text="Clear Form" />
-                        <ComboBox fx:id="sortCriteriaComboBox" prefHeight="26.0" prefWidth="103.0" promptText="Sort By" />
+                        <ComboBox fx:id="sortCriteriaComboBox" prefHeight="26.0" prefWidth="130.0" promptText="Sort By" />
                         <CheckBox fx:id="sortAscendingCheckBox" mnemonicParsing="false" prefHeight="28.0" prefWidth="85.0" text="Ascending" />
                      </children>
                   </HBox>
@@ -90,6 +90,7 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
+                        <TextField fx:id="searchField" promptText="Search" />
                         <Region HBox.hgrow="ALWAYS" />
                         <Label fx:id="studentCountLabel" style="-fx-text-fill: gray;" text="Total Students: 0" />
                      </children>

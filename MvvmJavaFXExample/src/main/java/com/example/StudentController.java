@@ -1,7 +1,6 @@
 package com.example;
 
 import javafx.beans.binding.Bindings;
-import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -9,8 +8,10 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -32,6 +33,9 @@ public class StudentController implements Initializable {
 
     @FXML
     private DatePicker birthDatePicker;
+
+    @FXML
+    private TextField searchField;
     
     @FXML
     private Label fullNameLabel;
@@ -65,6 +69,7 @@ public class StudentController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        birthDatePicker.setEditable(false);
         setupDataBinding();
         setupEventHandlers();
         populateSortingOptions();
@@ -82,7 +87,7 @@ public class StudentController implements Initializable {
         lastNameField.textProperty().bindBidirectional(viewModel.lastNameProperty());
         emailField.textProperty().bindBidirectional(viewModel.emailProperty());
         birthDatePicker.valueProperty().bindBidirectional(viewModel.birthDateProperty());
-
+        searchField.textProperty().bindBidirectional(viewModel.searchQueryProperty());
         
         // Bind full name label to computed property from ViewModel
         fullNameLabel.textProperty().bind(Bindings.createStringBinding(
@@ -113,6 +118,13 @@ public class StudentController implements Initializable {
             () -> "Total Students: " + viewModel.getStudentCount(),
             viewModel.getStudents()
         ));
+
+        viewModel.searchQueryProperty().addListener((obs, oldVal, newVal) -> {
+            viewModel.filterStudents(
+                sortCriteriaComboBox.getValue(),
+                sortAscendingCheckBox.isSelected()
+            );
+        });
     }
 
     /**
@@ -143,12 +155,46 @@ public class StudentController implements Initializable {
      * Sets up the ListView to display users from the ViewModel.
      */
     private void setupListView() {
-        studentListView.setItems(viewModel.getStudents());
+        studentListView.setItems(viewModel.getFilteredStudents());
         
-        // Add listener to update UI when list changes
-        viewModel.getStudents().addListener((ListChangeListener<Student>) change -> {
-            // This will trigger the binding update for user count
+        // // Add listener to update UI when list changes
+        // viewModel.getStudents().addListener((ListChangeListener<Student>) change -> {
+        //     // This will trigger the binding update for user count
+        // });
+        studentListView.setCellFactory(list -> new ListCell<Student>() {
+            @Override
+            protected void updateItem(Student student, boolean empty) {
+                super.updateItem(student, empty);
+
+                if (empty || student == null) {
+                    setText(null);
+                    setGraphic(null);
+                    return;
+                }
+
+                // Create 3 labels
+                Label name = new Label(student.getFullName());
+                name.setPrefWidth(150);
+                name.setStyle("-fx-padding: 0 20 0 0;");
+
+                Label email = new Label(student.getEmail());
+                email.setPrefWidth(240);
+                email.setStyle("-fx-padding: 0 20 0 0;");
+
+                Label birth = new Label(student.getBirthDate().toString());
+                birth.setPrefWidth(120);
+
+                HBox row = new HBox(name, email, birth);
+                row.setSpacing(10);
+
+                setGraphic(row);
+            }
         });
+
+        viewModel.filterStudents(
+            sortCriteriaComboBox.getValue(),
+            sortAscendingCheckBox.isSelected()
+        );
     }
 
     /**
@@ -188,6 +234,10 @@ public class StudentController implements Initializable {
         Student selectedStudent = studentListView.getSelectionModel().getSelectedItem();
         if (selectedStudent != null) {
             viewModel.removeStudent(selectedStudent);
+            viewModel.filterStudents(
+                sortCriteriaComboBox.getValue(),
+                sortAscendingCheckBox.isSelected()
+            );
             System.out.println("Student deleted: " + selectedStudent.getFullName());
             showSuccessMessage("Student deleted successfully!");
         }
@@ -249,19 +299,13 @@ public class StudentController implements Initializable {
             sortAscendingCheckBox.setSelected(true);
         }
 
-        private void setupSortingBinding() {
+    private void setupSortingBinding() {
         sortCriteriaComboBox.valueProperty().addListener((obs, oldVal, newVal) -> {
-            viewModel.sortStudents(
-                    newVal,
-                    sortAscendingCheckBox.isSelected()
-            );
+            viewModel.filterStudents(newVal, sortAscendingCheckBox.isSelected());
         });
 
         sortAscendingCheckBox.selectedProperty().addListener((obs, oldVal, newVal) -> {
-            viewModel.sortStudents(
-                    sortCriteriaComboBox.getValue(),
-                    newVal
-            );
+            viewModel.filterStudents(sortCriteriaComboBox.getValue(), newVal);
         });
     }
 }

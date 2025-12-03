@@ -28,6 +28,7 @@ public class Student {
 
     @Override
     public String toString() {
-        return "%s (%s), born on %s".formatted(getFullName(), email, birthDate);
+        // return getFullName() + "\t\t\t" + email + "\t\t\t\t\t" + birthDate;
+        return String.format("%-50s %-50s %s", getFullName(), email, birthDate.toString());
     }
 }
