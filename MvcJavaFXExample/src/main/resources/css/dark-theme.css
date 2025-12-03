@@ -1,0 +1,243 @@
+/* =============================================================
+   DARK THEME — Clean, Modern, Professional
+   ============================================================= */
+
+.root {
+    -fx-font-family: "Segoe UI", "Arial", sans-serif;
+    -fx-font-size: 13px;
+    -fx-background-color: #1e1e1e;
+
+    /* DARK PALETTE */
+    -primary-color: #4aa3ff;
+    -primary-hover: #2388ff;
+    -secondary-color: #7a7a7a;
+    -secondary-hover: #5f5f5f;
+
+    -success-color: #28d17c;
+    -danger-color: #ff4f4f;
+    -warning-color: #ffcb42;
+    -info-color: #2cc5ff;
+
+    -card-background: #252525;
+    -border-color: #3a3a3a;
+    -dark-color: #e6e6e6;
+
+    -header-background: linear-gradient(135deg, #343a40 0%, #212529 100%);
+}
+
+/* =============================================================
+   HEADER
+   ============================================================= */
+
+.header-section {
+    -fx-background-color: -card-background;
+    -fx-border-color: -border-color;
+    -fx-padding: 20px;
+}
+
+.title-label {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+/* =============================================================
+   STAT CARDS
+   ============================================================= */
+
+.stat-card {
+    -fx-background-color: #2c2c2c;
+    -fx-border-color: #3f3f3f;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 20px;
+}
+
+.stat-number {
+    -fx-text-fill: -primary-color;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.stat-label {
+    -fx-text-fill: #ffffff;
+}
+/* TEXT COLOR */
+#text {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+/* =============================================================
+   BUTTONS
+   ============================================================= */
+
+.button {
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-font-weight: 500;
+    -fx-padding: 10px 20px;
+}
+
+/* Primary */
+.primary-button {
+    -fx-background-color: -primary-color;
+    -fx-text-fill: white;
+}
+
+.primary-button:hover {
+    -fx-background-color: -primary-hover;
+}
+
+/* Secondary */
+.secondary-button {
+    /* -fx-background-color: #3a3a3a; */
+    -fx-text-fill: white;
+    -fx-background-color: #3a3a3a;
+}
+
+.secondary-button:hover {
+    -fx-background-color: #4f4f4f;
+}
+
+/* Danger */
+.danger-button {
+    -fx-background-color: -danger-color;
+    -fx-text-fill: white;
+}
+
+.danger-button:hover {
+    -fx-background-color: #ff2b2b;
+}
+
+/* Disabled */
+.button:disabled {
+    -fx-opacity: 0.4;
+}
+
+/* =============================================================
+   TABLE VIEW
+   ============================================================= */
+
+.student-table {
+    -fx-background-color: -card-background;
+    -fx-border-color: -border-color;
+}
+
+.student-table .column-header-background {
+    -fx-background-color: #2d2d2d;
+}
+
+.student-table .column-header {
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+}
+
+.student-table .table-row-cell {
+    -fx-background-color: -card-background;
+    -fx-border-color: #333333;
+}
+
+.student-table .table-row-cell:selected {
+    -fx-background-color: rgba(70,130,180,0.35);
+}
+
+.student-table .table-cell {
+    -fx-text-fill: #ffffff;
+}
+
+/* =============================================================
+   SEARCH FIELD & INPUTS
+   ============================================================= */
+
+.search-field,
+.form-field,
+.combo-box,
+.date-picker,
+.spinner {
+    -fx-background-color: #2a2a2a;
+    -fx-border-color: #444444;
+    -fx-text-fill: #ffffff;
+    -fx-prompt-text-fill: #ffffff;
+}
+
+.search-field:focused,
+.form-field:focused {
+    -fx-border-color: -primary-color;
+}
+
+/* ComboBox dropdown */
+.combo-box .list-cell {
+    -fx-background-color: #2b2b2b;
+    -fx-text-fill: #ffffff;
+}
+
+/* =============================================================
+   STATUS BAR
+   ============================================================= */
+
+.status-bar {
+    -fx-background-color: #202020;
+    -fx-border-color: #333333;
+}
+
+.status-label {
+    -fx-text-fill: #ffffff;
+}
+
+.timestamp-label {
+    -fx-text-fill: #ffffff;
+}
+
+.text-label {
+    -fx-text-fill: #ffffff;
+}
+.info-label {
+    -fx-text-fill: -info-color;
+}
+
+/* =============================================================
+   ALERT / POPUP
+   ============================================================= */
+
+.alert {
+    -fx-background-color: #262626;
+}
+
+.alert .header-panel {
+    -fx-background-color: #303030;
+}
+
+.alert .content.label {
+    -fx-text-fill: #e6e6e6;
+}
+
+/* =============================================================
+   SCROLLBAR
+   ============================================================= */
+
+.scroll-bar .thumb {
+    -fx-background-color: #555555;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #777777;
+}
+
+/* =============================================================
+   TOOLTIP
+   ============================================================= */
+
+.tooltip {
+    -fx-background-color: #111111;
+    -fx-text-fill: #ffffff;
+}
+
+/* =============================================================
+   UTILITY
+   ============================================================= */
+
+.text-left   { -fx-text-alignment: left; }
+.text-right  { -fx-text-alignment: right; }
+.text-center { -fx-text-alignment: center; }
