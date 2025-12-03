@@ -1,0 +1,18 @@
+# Maven
+target/
+
+# Java class files
+*.class
+
+# JavaFX build folders
+out/
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
