@@ -1,0 +1,8 @@
+Learning Java multithreading is fun and challenging.
+This file is used to test word counting and line counting.
+Different threads will read this file at the same time.
+Concurrency is important in modern software development.
+VS Code makes Java development easier.
+Each line here contains a few words.
+Let's see how many lines and characters this file really has.
+End of file one.

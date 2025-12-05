@@ -1,0 +1,12 @@
+The quick brown fox jumps over the lazy dog.
+Multithreading allows multiple tasks to run at the same time.
+This example file contains several sentences to test your program.
+Some lines are longer while others are shorter.
+This helps evaluate your character counting function.
+Producers and consumers run in parallel in Task 2.
+Thread pools improve performance in web crawler simulation.
+Synchronization helps avoid race conditions in bank accounts.
+Java provides different concurrency utilities.
+Learning by practicing is always the best way.
+This is the second file for the assignment.
+End of file two.

@@ -6,8 +6,6 @@ target/
 .vscode/
 
 # Any generated files
-bunchOfFiles/*
-!bunchOfFiles/README.md   # keep documentation if needed
 
 # Logs
 *.log

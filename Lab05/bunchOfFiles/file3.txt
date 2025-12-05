@@ -1,0 +1,18 @@
+Web crawling simulation often needs multiple threads.
+Each thread downloads a different URL.
+In this lab, we simulate download time using Thread.sleep().
+The goal is to compare the performance of different thread pools.
+FixedThreadPool uses a constant number of worker threads.
+CachedThreadPool expands and shrinks based on demand.
+SingleThreadExecutor runs tasks sequentially.
+Each approach has advantages and disadvantages.
+Thread safety becomes important when sharing data.
+Race conditions happen when multiple threads modify shared memory.
+Using synchronized blocks can prevent inconsistent results.
+This file contains more lines than the previous ones.
+Line count and word count should be higher as well.
+Java makes concurrency possible with simple abstractions.
+Developers must understand how threads behave.
+Debugging concurrency issues is harder than normal bugs.
+This file should help you test the accuracy of your program.
+End of file three.

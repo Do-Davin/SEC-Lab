@@ -1,0 +1,12 @@
+This is file number four for your Java multithreading lab.
+The text here includes a mixture of short and long sentences.
+Counting characters can vary depending on spacing and punctuation.
+Make sure your code handles empty lines correctly.
+
+This line is intentionally left with extra spaces at the end.     
+
+Blank lines should also be counted as lines.
+Your program should never crash when reading files.
+Handle exceptions properly because some files may not be readable.
+This file is mainly for testing edge cases.
+End of file four.

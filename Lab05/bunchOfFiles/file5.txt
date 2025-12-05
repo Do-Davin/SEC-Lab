@@ -1,0 +1,22 @@
+Java concurrency provides powerful tools for parallel processing.
+In large-scale applications, performance matters a lot.
+Without proper synchronization, threads may corrupt shared data.
+This is why understanding race conditions is essential.
+In this assignment, Task 4 focuses on safe vs unsafe bank accounts.
+The safe version uses synchronized methods.
+The unsafe version exposes the balance variable to data races.
+Both implementations help students understand thread safety.
+
+Task 1 deals with reading multiple files in parallel.
+This file is intentionally made longer to test performance.
+Word count should be significantly higher than the others.
+Different threads must process different files concurrently.
+A semaphore is used to limit total active threads.
+This prevents overwhelming the CPU.
+
+Task 2 introduces a priority queue shared buffer.
+Producers generate random numbers with random priority.
+Consumers always take the highest priority first.
+This is a real-world concept used in schedulers.
+This is the final file in the folder.
+End of file five.
