@@ -1,0 +1,16 @@
+# Java/Maven
+target/
+*.class
+
+# VSCode
+.vscode/
+
+# Logs
+*.log
+
+# Shell scripts ignore?
+# (remove the line below if you want to include run.sh)
+run.sh
+
+# OS
+.DS_Store

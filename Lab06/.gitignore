@@ -1,0 +1,6 @@
+# Java/Maven
+target/
+*.class
+
+# OS
+.DS_Store
