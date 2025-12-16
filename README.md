@@ -10,6 +10,7 @@ Each topic is organized into its own branch for clarity, version control, and in
 | **lab2**| Lab 02 exercises and implementation|
 | **lab5**| Lab 05 exercises and implementation|
 | **lab6**| Lab 06 exercises and implementation|
+| **lab7**| Lab 07 exercises and implementation|
 | **mvc**| Project implementation using **MVC architecture**|
 | **mvvm**| Project implementation using **MVVM architecture**|
 
