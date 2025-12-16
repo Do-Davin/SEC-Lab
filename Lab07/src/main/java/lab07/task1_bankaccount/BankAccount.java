@@ -1,9 +1,5 @@
 package main.java.lab07.task1_bankaccount;
 
-/**
- * Thread-safe BankAccount using synchronized methods.
- * Prevents race conditions during deposit and withdrawl.
- */
 public class BankAccount {
     
     private int balance;
