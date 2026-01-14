@@ -1,0 +1,9 @@
+{
+    "name": "lab08-docker-app",
+    "version": "1.0.0",
+    "main": "server.js",
+    "type": "commonjs",
+    "dependencies": {
+        "express": "^4.19.2"
+    }
+}
