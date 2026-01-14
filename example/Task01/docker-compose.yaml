@@ -1,0 +1,25 @@
+# 3 services: 
+#    API Gateway (using RabbitMQ), Producer Service, Consumer Service
+services:
+    rabbitmq:
+        container_name: API_Gateway
+        image: "rabbitmq:4.2-management"
+        ports:
+            - "5672:5672" # RabbitMQ default port
+            - "15672:15672" # RabbitMQ management UI port
+
+    producer:
+        build: ./Producer
+        depends_on:
+            - rabbitmq
+        environment:
+        RABBITMQ_HOST: rabbitmq
+        RABBITMQ_PORT: 5672
+
+    consumer:
+        build: ./Consumer
+        depends_on:
+            - rabbitmq
+        environment:
+        RABBITMQ_HOST: rabbitmq
+        RABBITMQ_PORT: 5672
