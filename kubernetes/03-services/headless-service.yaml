@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-headless-service
+  labels:
+    app: nginx
+spec:
+  clusterIP: None  # Headless service - no load balancing, returns pod IPs directly
+  selector:
+    app: nginx
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http

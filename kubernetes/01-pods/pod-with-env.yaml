@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: env-pod
+  labels:
+    app: env-demo
+spec:
+  containers:
+  - name: ubuntu-container
+    image: ubuntu:latest
+    command: ["/bin/bash"]
+    args: ["-c", "echo 'Database: '$DATABASE_HOST':'$DATABASE_PORT; echo 'User: '$DATABASE_USER; sleep 3600"]
+    env:
+    - name: DATABASE_HOST
+      value: "mysql.example.com"
+    - name: DATABASE_PORT
+      value: "3306"
+    - name: DATABASE_USER
+      value: "admin"
+    - name: DATABASE_PASSWORD
+      value: "secret123"

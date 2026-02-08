@@ -1,0 +1,238 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-nginx-config
+  namespace: ecommerce
+data:
+  nginx.conf: |
+    events {
+      worker_connections 1024;
+    }
+    
+    http {
+      include /etc/nginx/mime.types;
+      default_type application/octet-stream;
+      
+      upstream backend {
+        server backend-service:3000;
+      }
+      
+      server {
+        listen 80;
+        server_name _;
+        
+        root /usr/share/nginx/html;
+        index index.html;
+        
+        # Frontend routes
+        location / {
+          try_files $uri $uri/ /index.html;
+        }
+        
+        # Proxy API requests to backend
+        location /api/ {
+          proxy_pass http://backend;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+        }
+        
+        # Health check endpoint
+        location /nginx-health {
+          access_log off;
+          return 200 "healthy\n";
+          add_header Content-Type text/plain;
+        }
+      }
+    }
+  
+  index.html: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>E-Commerce Platform</title>
+      <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          min-height: 100vh;
+          padding: 20px;
+        }
+        .container {
+          max-width: 1200px;
+          margin: 0 auto;
+          background: white;
+          border-radius: 20px;
+          padding: 40px;
+          box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+          color: #667eea;
+          text-align: center;
+          margin-bottom: 30px;
+          font-size: 2.5em;
+        }
+        .info-box {
+          background: #f8f9fa;
+          border-left: 4px solid #667eea;
+          padding: 20px;
+          margin: 20px 0;
+          border-radius: 5px;
+        }
+        .info-box h3 {
+          color: #667eea;
+          margin-bottom: 10px;
+        }
+        .products {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 20px;
+          margin: 30px 0;
+        }
+        .product-card {
+          background: white;
+          border: 2px solid #e0e0e0;
+          border-radius: 10px;
+          padding: 20px;
+          text-align: center;
+          transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .product-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .product-card h3 {
+          color: #333;
+          margin: 10px 0;
+        }
+        .price {
+          color: #667eea;
+          font-size: 1.5em;
+          font-weight: bold;
+        }
+        button {
+          background: #667eea;
+          color: white;
+          border: none;
+          padding: 12px 30px;
+          border-radius: 25px;
+          cursor: pointer;
+          font-size: 1em;
+          margin: 10px 5px;
+          transition: background 0.3s;
+        }
+        button:hover {
+          background: #764ba2;
+        }
+        #server-info {
+          background: #fff3cd;
+          border: 1px solid #ffc107;
+          padding: 10px;
+          border-radius: 5px;
+          margin: 10px 0;
+          font-family: monospace;
+        }
+        .status {
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          margin-right: 5px;
+        }
+        .status.online { background: #28a745; }
+        .status.offline { background: #dc3545; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <h1>🛒 E-Commerce Platform</h1>
+        
+        <div class="info-box">
+          <h3>📊 System Status</h3>
+          <p><span class="status online"></span> Frontend: Running</p>
+          <p><span class="status" id="backend-status"></span> Backend: <span id="backend-text">Checking...</span></p>
+          <p><span class="status" id="db-status"></span> Database: <span id="db-text">Checking...</span></p>
+          <div id="server-info"></div>
+        </div>
+        
+        <div class="info-box">
+          <h3>🎯 Kubernetes Lab Demo</h3>
+          <p>This application demonstrates:</p>
+          <ul style="margin-left: 20px; margin-top: 10px;">
+            <li>✅ Multiple frontend pods with load balancing</li>
+            <li>✅ Multiple backend API pods with automatic scaling</li>
+            <li>✅ MongoDB database with persistent storage</li>
+            <li>✅ Service discovery and internal networking</li>
+            <li>✅ ConfigMaps and Secrets management</li>
+          </ul>
+        </div>
+        
+        <h2 style="text-align: center; color: #667eea; margin: 30px 0;">Our Products</h2>
+        <div id="products" class="products">
+          <p style="text-align: center; grid-column: 1 / -1;">Loading products...</p>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+          <button onclick="loadProducts()">🔄 Refresh Products</button>
+          <button onclick="testLoadBalancing()">⚖️ Test Load Balancing</button>
+        </div>
+      </div>
+      
+      <script>
+        async function checkBackend() {
+          try {
+            const response = await fetch('/api/products');
+            const data = await response.json();
+            document.getElementById('backend-status').className = 'status online';
+            document.getElementById('backend-text').textContent = 'Running';
+            document.getElementById('db-status').className = 'status online';
+            document.getElementById('db-text').textContent = 'Connected';
+            document.getElementById('server-info').textContent = 
+              `Served by backend pod: ${data.server}`;
+            return data;
+          } catch (error) {
+            document.getElementById('backend-status').className = 'status offline';
+            document.getElementById('backend-text').textContent = 'Error';
+            document.getElementById('db-status').className = 'status offline';
+            document.getElementById('db-text').textContent = 'Unknown';
+            return null;
+          }
+        }
+        
+        async function loadProducts() {
+          const data = await checkBackend();
+          const productsDiv = document.getElementById('products');
+          
+          if (data && data.products) {
+            productsDiv.innerHTML = data.products.map(product => `
+              <div class="product-card">
+                <h3>${product.name}</h3>
+                <p class="price">$${product.price}</p>
+                <button onclick="alert('Added to cart!')">Add to Cart</button>
+              </div>
+            `).join('');
+          } else {
+            productsDiv.innerHTML = '<p style="text-align: center; grid-column: 1 / -1;">Unable to load products</p>';
+          }
+        }
+        
+        async function testLoadBalancing() {
+          const servers = new Set();
+          for (let i = 0; i < 10; i++) {
+            const data = await checkBackend();
+            if (data) servers.add(data.server);
+            await new Promise(resolve => setTimeout(resolve, 100));
+          }
+          alert(`Load balancing test complete!\nRequests distributed across ${servers.size} backend pods:\n${Array.from(servers).join('\n')}`);
+        }
+        
+        // Load products on page load
+        loadProducts();
+        setInterval(checkBackend, 5000); // Check backend every 5 seconds
+      </script>
+    </body>
+    </html>

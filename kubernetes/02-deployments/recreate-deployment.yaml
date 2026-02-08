@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recreate-deployment
+  labels:
+    app: recreate-app
+spec:
+  replicas: 3
+  strategy:
+    type: Recreate  # All existing pods are killed before new ones are created
+  selector:
+    matchLabels:
+      app: recreate-app
+  template:
+    metadata:
+      labels:
+        app: recreate-app
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:alpine
+        ports:
+        - containerPort: 80

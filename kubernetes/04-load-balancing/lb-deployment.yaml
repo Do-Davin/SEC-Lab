@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loadbalancer-demo
+  labels:
+    app: lb-demo
+spec:
+  replicas: 5  # Multiple replicas for load balancing
+  selector:
+    matchLabels:
+      app: lb-demo
+  template:
+    metadata:
+      labels:
+        app: lb-demo
+    spec:
+      containers:
+      - name: hostname-app
+        image: k8s.gcr.io/serve_hostname
+        ports:
+        - containerPort: 9376
+        resources:
+          requests:
+            memory: "32Mi"
+            cpu: "100m"
+          limits:
+            memory: "64Mi"
+            cpu: "200m"

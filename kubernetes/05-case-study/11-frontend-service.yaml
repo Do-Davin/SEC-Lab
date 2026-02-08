@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  namespace: ecommerce
+  labels:
+    app: frontend
+    tier: presentation
+spec:
+  type: LoadBalancer  # Expose to external traffic
+  selector:
+    app: frontend
+    tier: presentation
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  sessionAffinity: None  # Round-robin across frontend pods

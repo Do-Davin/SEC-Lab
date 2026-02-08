@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sticky-session-service
+  labels:
+    app: lb-demo
+spec:
+  type: LoadBalancer
+  selector:
+    app: lb-demo
+  ports:
+  - port: 80
+    targetPort: 9376
+    protocol: TCP
+  sessionAffinity: ClientIP  # Sticky sessions based on client IP
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 10800  # 3 hours
